@@ -18,12 +18,27 @@
     .sidebar-transition {
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #e2e8f0;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #cbd5e1;
+    }
   </style>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@18.2.0",
+    "react/jsx-runtime": "https://esm.sh/react@18.2.0/jsx-runtime",
     "react-dom": "https://esm.sh/react-dom@18.2.0",
     "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
     "lucide-react": "https://esm.sh/lucide-react@0.344.0?external=react",
@@ -37,7 +52,7 @@
 }
 </script>
 </head>
-<body class="antialiased">
+<body class="antialiased text-gray-900">
   <div id="root"></div>
   <script type="text/babel" data-type="module" src="./index.tsx"></script>
 </body>
