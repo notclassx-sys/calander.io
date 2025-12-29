@@ -2,34 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Calendar.io</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --emerald-primary: #10b981;
+      --border-dark: #9ca3af;
+    }
     body {
       font-family: 'Inter', sans-serif;
       background-color: #ffffff;
       -webkit-tap-highlight-color: transparent;
-      overflow-x: hidden;
+      overflow: hidden; 
+      height: 100%;
+      position: fixed;
+      width: 100%;
+    }
+    #root {
+      height: 100%;
     }
     .sidebar-transition {
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #ecfdf5;
-      border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #d1fae5;
+    /* Native-like active states */
+    .active-tap:active {
+      background-color: #f3f4f6;
+      transform: scale(0.96);
     }
   </style>
   <script type="importmap">
@@ -52,7 +54,6 @@
 </head>
 <body class="antialiased text-gray-900">
   <div id="root"></div>
-  <!-- Use standard type="module" so Vite/Vercel can correctly build and find this file -->
   <script type="module" src="/index.tsx"></script>
 </body>
 </html>

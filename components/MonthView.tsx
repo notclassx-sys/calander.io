@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { DAYS } from '../constants.ts';
 
@@ -30,39 +29,34 @@ const MonthView: React.FC<MonthViewProps> = ({ currentDate }) => {
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-white rounded-t-3xl border-t border-l border-gray-100 overflow-hidden shadow-sm">
-      <div className="grid grid-cols-7 border-b border-gray-100 bg-white">
+    <div className="flex-1 flex flex-col bg-white border-t border-l border-gray-400 overflow-hidden">
+      {/* Weekday Header - High Contrast */}
+      <div className="grid grid-cols-7 border-b border-gray-400 bg-emerald-50/30">
         {DAYS.map(day => (
-          <div key={day} className="py-2 md:py-4 text-center text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest">
-            {/* Show only first letter on very small screens */}
-            <span className="hidden sm:inline">{day}</span>
-            <span className="sm:hidden">{day.charAt(0)}</span>
+          <div key={day} className="py-2.5 text-center text-[11px] font-bold text-gray-700 uppercase border-r border-gray-400 last:border-r-0">
+            {day.charAt(0)}
           </div>
         ))}
       </div>
+      
+      {/* Calendar Grid - Sharp Borders for APK clarity */}
       <div className="grid grid-cols-7 flex-1 auto-rows-fr">
         {calendarDays.map((item, idx) => {
           const isToday = item.date.toDateString() === new Date().toDateString();
           return (
             <div
               key={idx}
-              className={`p-1 md:p-2 border-r border-b border-gray-50 flex flex-col transition-colors ${!item.currentMonth ? 'bg-gray-50/30' : 'hover:bg-emerald-50/30'}`}
+              className={`relative border-r border-b border-gray-400 flex items-center justify-center transition-colors ${
+                !item.currentMonth ? 'bg-gray-100' : 'bg-white active:bg-emerald-50'
+              } ${idx % 7 === 6 ? 'border-r-0' : ''}`}
             >
-              <div className="flex justify-center sm:justify-start mb-1">
-                <span className={`text-xs md:text-sm font-bold w-6 h-6 md:w-8 md:h-8 flex items-center justify-center rounded-full transition-all ${
-                  isToday 
-                    ? 'bg-emerald-600 text-white shadow-md shadow-emerald-100' 
-                    : item.currentMonth ? 'text-gray-700' : 'text-gray-300'
-                }`}>
-                  {item.day}
-                </span>
-              </div>
-              {/* Event indicators for mobile */}
-              <div className="flex-1 flex flex-col gap-1 overflow-hidden">
-                {item.currentMonth && Math.random() > 0.8 && (
-                   <div className="h-1 w-1 md:h-1.5 md:w-1.5 bg-emerald-400 rounded-full mx-auto sm:mx-0 mt-auto mb-1"></div>
-                )}
-              </div>
+              <span className={`text-sm md:text-base font-bold w-9 h-9 flex items-center justify-center rounded-full transition-all ${
+                isToday 
+                  ? 'bg-emerald-600 text-white shadow-sm' 
+                  : item.currentMonth ? 'text-gray-900' : 'text-gray-400'
+              }`}>
+                {item.day}
+              </span>
             </div>
           );
         })}

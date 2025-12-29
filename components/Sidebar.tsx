@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Calendar as CalendarIcon, Clock, Users, Settings, LayoutGrid, LogOut, X } from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, Users, Settings, LogOut, X } from 'lucide-react';
 import { supabase } from '../services/supabaseClient.ts';
 
 interface SidebarProps {
@@ -16,64 +15,46 @@ const Sidebar: React.FC<SidebarProps> = ({ user, isOpen, onClose }) => {
 
   return (
     <>
-      {/* Mobile Overlay */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-40 lg:hidden"
           onClick={onClose}
         />
       )}
 
       <aside className={`
-        fixed inset-y-0 left-0 w-72 bg-white z-50 p-6 flex flex-col border-r border-gray-100
+        fixed inset-y-0 left-0 w-80 bg-white z-50 p-6 flex flex-col border-r-2 border-gray-400
         sidebar-transition lg:relative lg:translate-x-0
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center shadow-md shadow-emerald-100">
-              <CalendarIcon className="text-white" size={18} />
+        <div className="flex items-center justify-between mb-10">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-100">
+              <CalendarIcon className="text-white" size={22} />
             </div>
-            <span className="text-xl font-bold text-gray-900 tracking-tight">Calendar.io</span>
+            <span className="text-2xl font-black text-gray-900 tracking-tighter">CALENDAR.IO</span>
           </div>
-          <button onClick={onClose} className="lg:hidden p-2 text-gray-400 hover:text-gray-600">
-            <X size={20} />
+          <button onClick={onClose} className="p-2 text-gray-400 hover:text-gray-900 active:bg-gray-100 rounded-full">
+            <X size={24} />
           </button>
         </div>
 
-        <nav className="space-y-1 mb-8">
-          <NavItem icon={<LayoutGrid size={20} />} label="Overview" active onClick={onClose} />
-          <NavItem icon={<Users size={20} />} label="Team" onClick={onClose} />
-          <NavItem icon={<Clock size={20} />} label="Tasks" onClick={onClose} />
-          <NavItem icon={<Settings size={20} />} label="Settings" onClick={onClose} />
+        <nav className="space-y-2 mb-8">
+          <NavItem icon={<CalendarIcon size={24} />} label="My Calendar" active onClick={onClose} />
+          <NavItem icon={<Clock size={24} />} label="Daily Tasks" onClick={onClose} />
+          <NavItem icon={<Users size={24} />} label="Team Groups" onClick={onClose} />
+          <NavItem icon={<Settings size={24} />} label="Settings" onClick={onClose} />
         </nav>
 
-        {/* Mini Calendar Mock - Hidden on small mobile to save space */}
-        <div className="bg-emerald-50/50 rounded-2xl p-4 border border-emerald-100/50 mt-4 hidden sm:block">
-          <div className="flex justify-between items-center mb-3">
-            <span className="text-sm font-semibold text-gray-700">March 2024</span>
-          </div>
-          <div className="grid grid-cols-7 gap-y-2 text-center text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest">
-            {['S','M','T','W','T','F','S'].map(d => <span key={d}>{d}</span>)}
-          </div>
-          <div className="grid grid-cols-7 gap-y-1 text-center text-[11px] text-gray-600">
-            {Array.from({ length: 31 }).map((_, i) => (
-              <span key={i} className={`p-1 rounded-md ${i + 1 === 14 ? 'bg-emerald-600 text-white font-bold' : ''}`}>
-                {i + 1}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-auto pt-6 border-t border-gray-100">
-          <div className="flex items-center gap-3">
-            <img src={user?.avatar} alt="Avatar" className="w-10 h-10 rounded-full bg-gray-200 border-2 border-emerald-50" />
-            <div className="flex-1 flex-col min-w-0">
-              <span className="text-sm font-bold text-gray-900 truncate block">{user?.name}</span>
-              <span className="text-xs text-gray-400">Free Plan</span>
+        <div className="mt-auto pt-6 border-t-2 border-gray-100">
+          <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-2xl border border-gray-200">
+            <img src={user?.avatar} alt="Avatar" className="w-12 h-12 rounded-full border-2 border-emerald-500 shadow-sm" />
+            <div className="flex-1 flex flex-col min-w-0">
+              <span className="text-sm font-bold text-gray-900 truncate">{user?.name}</span>
+              <span className="text-xs text-gray-500 font-medium">Standard User</span>
             </div>
-            <button onClick={handleLogout} className="p-2 text-gray-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all" aria-label="Log out">
-              <LogOut size={18} />
+            <button onClick={handleLogout} className="p-3 text-gray-400 hover:text-rose-500 active:bg-rose-50 rounded-xl transition-all">
+              <LogOut size={20} />
             </button>
           </div>
         </div>
@@ -85,12 +66,12 @@ const Sidebar: React.FC<SidebarProps> = ({ user, isOpen, onClose }) => {
 const NavItem = ({ icon, label, active = false, onClick }: { icon: React.ReactNode; label: string; active?: boolean; onClick: () => void }) => (
   <button
     onClick={onClick}
-    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-      active ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-gray-500 hover:bg-gray-50'
+    className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all active:scale-[0.97] ${
+      active ? 'bg-emerald-600 text-white font-black shadow-lg shadow-emerald-100' : 'text-gray-600 hover:bg-gray-50'
     }`}
   >
     {icon}
-    <span>{label}</span>
+    <span className="text-base">{label}</span>
   </button>
 );
 
