@@ -18,17 +18,25 @@
       background-color: #ffffff;
       -webkit-tap-highlight-color: transparent;
       overflow: hidden; 
-      height: 100%;
-      position: fixed;
-      width: 100%;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      position: fixed; /* Prevents unwanted scrolling/bouncing in APK */
     }
     #root {
       height: 100%;
+      width: 100%;
     }
     .sidebar-transition {
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    /* Native-like active states */
+    /* Touch optimization for APK */
+    button, [role="button"] {
+      cursor: pointer;
+      user-select: none;
+      touch-action: manipulation;
+    }
     .active-tap:active {
       background-color: #f3f4f6;
       transform: scale(0.96);
