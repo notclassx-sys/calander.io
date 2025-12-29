@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Login from './components/Login.tsx';
 import Sidebar from './components/Sidebar.tsx';
 import MonthView from './components/MonthView.tsx';
-import { ChevronLeft, ChevronRight, Menu, Bell, Calendar as CalendarIcon } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Menu, Bell, Calendar as CalendarIcon, Loader2 } from 'lucide-react';
 import { MONTHS } from './constants.ts';
 import { ViewType, User } from './types.ts';
 import { supabase } from './services/supabaseClient.ts';
@@ -11,6 +11,7 @@ import { Session } from '@supabase/supabase-js';
 
 const App: React.FC = () => {
   const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
   const [view, setView] = useState<ViewType>('month');
   const [currentDate, setCurrentDate] = useState(new Date());
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -18,12 +19,14 @@ const App: React.FC = () => {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
+      setLoading(false);
     });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
@@ -36,6 +39,14 @@ const App: React.FC = () => {
   const prevMonth = () => {
     setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
   };
+
+  if (loading) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-[#fcfdfc]">
+        <Loader2 className="animate-spin text-emerald-600" size={32} />
+      </div>
+    );
+  }
 
   if (!session) {
     return <Login />;
