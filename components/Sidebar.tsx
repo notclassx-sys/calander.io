@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Calendar as CalendarIcon, Clock, Users, Settings, Plus, LayoutGrid, ChevronLeft, ChevronRight, LogOut } from 'lucide-react';
-import { supabase } from '../services/supabaseClient';
+import { supabase } from '../services/supabaseClient.ts';
 
 interface SidebarProps {
   user?: { name: string; avatar: string };

@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
-import Login from './components/Login';
-import Sidebar from './components/Sidebar';
-import MonthView from './components/MonthView';
+import Login from './components/Login.tsx';
+import Sidebar from './components/Sidebar.tsx';
+import MonthView from './components/MonthView.tsx';
 import { ChevronLeft, ChevronRight, Search, Bell } from 'lucide-react';
-import { MONTHS } from './constants';
-import { ViewType, User } from './types';
-import { supabase } from './services/supabaseClient';
+import { MONTHS } from './constants.ts';
+import { ViewType, User } from './types.ts';
+import { supabase } from './services/supabaseClient.ts';
 import { Session } from '@supabase/supabase-js';
 
 const App: React.FC = () => {

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { DAYS } from '../constants';
+import { DAYS } from '../constants.ts';
 
 interface MonthViewProps {
   currentDate: Date;

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Calendar, CheckCircle, ShieldCheck, Zap } from 'lucide-react';
-import { supabase } from '../services/supabaseClient';
+import { supabase } from '../services/supabaseClient.ts';
 
 const Login: React.FC = () => {
   const handleGoogleLogin = async () => {
