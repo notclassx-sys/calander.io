@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { DAYS } from '../constants.ts';
 
 interface MonthViewProps {
@@ -28,39 +29,67 @@ const MonthView: React.FC<MonthViewProps> = ({ currentDate }) => {
     calendarDays.push({ day: i, currentMonth: false, date: new Date(year, month + 1, i) });
   }
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.005
+      }
+    }
+  };
+
+  const itemAnim = {
+    hidden: { opacity: 0, scale: 0.9 },
+    show: { opacity: 1, scale: 1 }
+  };
+
   return (
-    <div className="flex-1 flex flex-col bg-white border-t border-l border-gray-400 overflow-hidden">
-      {/* Weekday Header - High Contrast */}
-      <div className="grid grid-cols-7 border-b border-gray-400 bg-emerald-50/30">
+    <div className="flex-1 flex flex-col bg-white overflow-hidden p-2 lg:p-4">
+      {/* Weekday Header */}
+      <div className="grid grid-cols-7 mb-2">
         {DAYS.map(day => (
-          <div key={day} className="py-2.5 text-center text-[11px] font-bold text-gray-700 uppercase border-r border-gray-400 last:border-r-0">
+          <div key={day} className="py-2 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest">
             {day.charAt(0)}
           </div>
         ))}
       </div>
       
-      {/* Calendar Grid - Sharp Borders for APK clarity */}
-      <div className="grid grid-cols-7 flex-1 auto-rows-fr">
+      {/* Calendar Grid */}
+      <motion.div 
+        variants={container}
+        initial="hidden"
+        animate="show"
+        key={currentDate.toISOString()} // Force re-animation on month change
+        className="grid grid-cols-7 flex-1 gap-1"
+      >
         {calendarDays.map((item, idx) => {
           const isToday = item.date.toDateString() === new Date().toDateString();
           return (
-            <div
+            <motion.div
+              variants={itemAnim}
               key={idx}
-              className={`relative border-r border-b border-gray-400 flex items-center justify-center transition-colors ${
-                !item.currentMonth ? 'bg-gray-100' : 'bg-white active:bg-emerald-50'
-              } ${idx % 7 === 6 ? 'border-r-0' : ''}`}
+              className={`relative rounded-2xl flex items-center justify-center transition-colors overflow-hidden group ${
+                !item.currentMonth ? 'bg-slate-50/50' : 'bg-white border border-slate-100 hover:border-emerald-200'
+              }`}
             >
-              <span className={`text-sm md:text-base font-bold w-9 h-9 flex items-center justify-center rounded-full transition-all ${
+              <div className={`absolute top-2 right-2 w-1.5 h-1.5 rounded-full ${isToday ? 'bg-emerald-500' : 'opacity-0'}`} />
+              
+              <span className={`text-sm md:text-base font-bold transition-all ${
                 isToday 
-                  ? 'bg-emerald-600 text-white shadow-sm' 
-                  : item.currentMonth ? 'text-gray-900' : 'text-gray-400'
+                  ? 'text-emerald-600' 
+                  : item.currentMonth ? 'text-slate-700' : 'text-slate-300'
               }`}>
                 {item.day}
               </span>
-            </div>
+              
+              {item.currentMonth && (
+                <div className="absolute inset-0 bg-emerald-600/0 active:bg-emerald-600/5 transition-colors pointer-events-none" />
+              )}
+            </motion.div>
           );
         })}
-      </div>
+      </motion.div>
     </div>
   );
 };
