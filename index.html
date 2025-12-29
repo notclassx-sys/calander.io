@@ -11,14 +11,13 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #fcfdfc;
+      background-color: #ffffff;
       -webkit-tap-highlight-color: transparent;
       overflow-x: hidden;
     }
     .sidebar-transition {
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    /* Custom scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
     }
@@ -26,14 +25,13 @@
       background: transparent;
     }
     ::-webkit-scrollbar-thumb {
-      background: #e2e8f0;
+      background: #ecfdf5;
       border-radius: 10px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #cbd5e1;
+      background: #d1fae5;
     }
   </style>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="importmap">
 {
   "imports": {
@@ -54,6 +52,7 @@
 </head>
 <body class="antialiased text-gray-900">
   <div id="root"></div>
-  <script type="text/babel" data-type="module" src="./index.tsx"></script>
+  <!-- Use standard type="module" so Vite/Vercel can correctly build and find this file -->
+  <script type="module" src="/index.tsx"></script>
 </body>
 </html>
